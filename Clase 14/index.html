@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Notas en el Navegador</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #ffdfc9;
+      text-align: center;
+      padding: 50px;
+    }
+    textarea {
+      min-width: 500px;
+      min-height: 200px;
+      max-width: 90%;
+      max-height: 90%;
+      resize: both;
+      margin: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      cursor: pointer;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>📝 Mis Notas</h1>
+  <textarea id="nota" placeholder="Escribe una nota..."></textarea><br>
+  <button id="guardar">Guardar Nota</button>
+  <button id="borrar">Borrar Todo</button>
+  <ul id="listaNotas"></ul>
+
+  <script src="script.js"></script>
+</body>
+</html>
