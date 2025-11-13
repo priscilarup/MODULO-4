@@ -5,17 +5,36 @@ let notas = JSON.parse(localStorage.getItem("notas")) || [];
 
 function mostrarNotas() {
   listaNotas.innerHTML = "";
-  notas.forEach((texto, i) => {
+  notas.forEach((nota, i) => {
     const li = document.createElement("li");
-    li.textContent = texto;
+
+    li.innerHTML = `
+      <div class="contenido">
+        <p class="fecha">🕒 ${nota.fecha}</p>
+        <p>${nota.texto}</p>
+      </div>
+      <button class="eliminar" data-index="${i}">Eliminar</button>
+    `;
+
     listaNotas.appendChild(li);
+  });
+
+  // Asignar evento a cada botón "Eliminar"
+  document.querySelectorAll(".eliminar").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      const index = e.target.dataset.index;
+      notas.splice(index, 1);
+      localStorage.setItem("notas", JSON.stringify(notas));
+      mostrarNotas();
+    });
   });
 }
 
 document.getElementById("guardar").addEventListener("click", () => {
-  const nota = document.getElementById("nota").value.trim();
-  if (nota) {
-    notas.push(nota);
+  const texto = document.getElementById("nota").value.trim();
+  if (texto) {
+    const fecha = new Date().toLocaleString("es-AR");
+    notas.push({ texto, fecha });
     localStorage.setItem("notas", JSON.stringify(notas));
     mostrarNotas();
     document.getElementById("nota").value = "";
@@ -23,9 +42,11 @@ document.getElementById("guardar").addEventListener("click", () => {
 });
 
 document.getElementById("borrar").addEventListener("click", () => {
-  localStorage.removeItem("notas");
-  notas = [];
-  mostrarNotas();
+  if (confirm("¿Seguro que querés borrar todas las notas?")) {
+    localStorage.removeItem("notas");
+    notas = [];
+    mostrarNotas();
+  }
 });
 
 mostrarNotas();
